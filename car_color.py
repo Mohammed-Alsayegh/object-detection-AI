@@ -2,16 +2,15 @@ from ultralytics import YOLO
 import cv2
 import numpy as np
 
-# تحميل النموذج
-model = YOLO("C:/Users/super/Desktop/yolo/yolov8n.pt")
 
-# تحميل الفيديو
-video_path = "yourpath"
+model = YOLO("Loading the model")
+
+video_path = "Loading the video"
 cap = cv2.VideoCapture(video_path)
 
-class_names = model.names  # أسماء الكلاسات
+class_names = model.names  
 
-# دالة لتحديد لون السيارة بناءً على المتوسط
+
 def get_car_color(avg_color):
     blue, green, red = avg_color
 
@@ -52,16 +51,17 @@ while True:
             avg_color = crop.mean(axis=0).mean(axis=0)  # BGR
             color_name = get_car_color(avg_color)
 
-            # طباعة الموقع واللون
+            
             print(f"🚗 Car at ({x1},{y1}) → Color: {color_name}")
 
-            # رسم المربع واللون
+            
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
             cv2.putText(frame, f"{color_name}", (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX,
                         0.6, (0, 255, 0), 2)
 
-    # عرض الفيديو
+    
     cv2.imshow("YOLO Car Detection", frame)
 
 cap.release()
 cv2.destroyAllWindows()
+
